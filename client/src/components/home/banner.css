@@ -1,0 +1,12 @@
+.Banner_img{
+width: 100%;
+height: 350px;
+}
+.carousel{
+  margin-top: 60px;
+}
+
+img {
+  overflow-clip-margin: content-box;
+  overflow: clip;
+}
