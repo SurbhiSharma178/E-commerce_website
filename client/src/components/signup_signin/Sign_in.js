@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import "./signup.css";
 import { NavLink } from 'react-router-dom';
 import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { LoginContext } from '../context/ContextProvider';
 
 const Sign_in = () => {
   // log data = inital value/ current value
@@ -12,6 +13,8 @@ const Sign_in = () => {
 
   });
 console.log(logdata);
+
+const { account, setAccount } = useContext(LoginContext);
 
   const addData = (e) => {
     const {name,value}=e.target;
@@ -49,6 +52,7 @@ console.log(logdata);
           });
     }else{
       console.log("Data successfully fetched");
+      setAccount(data)
         toast.success('Welcome to amazon ', {
           position: "top-center",
           });

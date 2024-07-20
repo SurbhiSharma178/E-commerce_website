@@ -1,4 +1,5 @@
 import React from 'react'
+import "./buynow.css";
 
 const Option = () => {
   return (

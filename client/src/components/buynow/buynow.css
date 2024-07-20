@@ -41,7 +41,7 @@
 
 
 .left_buy .item_containert{
-  padding: 10px 5px 20px 15px;
+  padding: 10px 5px 10px 15px;
   display: grid;
   grid-template-columns:.8fr 2fr .1fr;
 }
@@ -77,6 +77,7 @@
 .item_details .add_remove_select{
   display: flex;
   align-items: center;
+  margin: 0 0 10px 0;
 }
 
 

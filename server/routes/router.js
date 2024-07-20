@@ -172,4 +172,29 @@ router.get("/cartdetails",athenticate,async(req,res)=>{
   }
 })
 
+// Get valid user
+router.get("/validUser",athenticate,async(req,res)=>{
+  try {
+    const validUserOne= await USER.findOne({_id:req.userId});
+    res.status(201).json(validUserOne);
+  } catch (error) {
+    console.log("Error "+error.message);
+  }
+})
+
+// Remove items from cart
+router.delete("/remove/:id",athenticate,async(req,res)=>{
+  try {
+    const {id}= req.params;
+
+    req.rootUser.carts= req.rootUser.carts.filter((currentValue)=>{
+      return currentValue.id !=id;
+
+    })
+  } catch (error) {
+    console.log("Error "+error.message);
+  }
+})
+
+
 module.exports = router;

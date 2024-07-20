@@ -47,6 +47,7 @@ useEffect(()=>{
           {
             cartData.map((e,k)=>{
               return(
+                <>
             <div className="item_containert">
             <img src={e. url} alt="" />
             <div className="item_details">
@@ -60,14 +61,16 @@ useEffect(()=>{
             </div>
             <h3 className='item_price'>₹{e.price.cost}</h3>
           </div>
+          <Divider/>
+          </>
               )
             })
           }
-          
-          <Divider/>
-          <Subtotal/>
+       
+         
+          <Subtotal iteam={cartData}/>
         </div>
-        <Right/>
+        <Right iteam={cartData}/>
           </div>
     </div>:""
     }
