@@ -1,13 +1,15 @@
 import React ,{useContext, useEffect, useState } from 'react'
 import "./cart.css";
 import { Divider } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams } from 'react-router-dom';
 // import {products} from "../home/Maincomp"
 import { LoginContext } from '../context/ContextProvider';
 
 const SecondslideCart = () => {
 
   const { id } = useParams("");
+
+  const history= useNavigate("");
 
   const {account ,setAccount}= useContext(LoginContext);
 
@@ -55,6 +57,7 @@ const SecondslideCart = () => {
     alert("Invalid User")
   }else{
     // alert("Data adddin your cart")
+    history("/buynow")
     setAccount(data2)
   }
   }

@@ -41,7 +41,7 @@ const Navbaar = () => {
               </div>
               <div className="sign_in">
                 {/* <Dropdown /> */}
-                <NavLink href='/login'>
+                <NavLink to='/login'>
                   <span>Hello, sign in </span>
                   <p><strong>Account & Lists</strong></p>
                 </NavLink>
@@ -53,12 +53,20 @@ const Navbaar = () => {
                 <span><strong>& Order</strong></span>
               </div>
               <div className="cart_btn">
-                <NavLink to="/buynow">
-                <Badge badgeContent={account.carts?.length || 0} color='primary'>
+                {
+                  account?<NavLink to="/buynow">
+                  <Badge badgeContent={account.carts?.length || 0} color='primary'>
+                    <ShoppingCartOutlinedIcon />
+                  </Badge>
+                  cart
+                  </NavLink>:
+                <NavLink to="/login">
+                <Badge badgeContent={0} color='primary'>
                   <ShoppingCartOutlinedIcon />
                 </Badge>
                 cart
                 </NavLink>
+                }
               </div>
 
             </div>

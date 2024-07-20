@@ -161,4 +161,15 @@ router.post("/addcart/:id",athenticate, async(req,res)=>{
   }
 })
 
+
+// Get carts details
+router.get("/cartdetails",athenticate,async(req,res)=>{
+  try {
+    const buyuser= await USER.findOne({_id:req.userId});
+    res.status(201).json(buyuser);
+  } catch (error) {
+    console.log("Error "+error.message);
+  }
+})
+
 module.exports = router;
