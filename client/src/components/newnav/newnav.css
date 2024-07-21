@@ -16,7 +16,7 @@
 }
 
 .new_nav p{
-  padding: 10px 13px 8px 13px;
+  padding: 8px 11px 8px 11px;
   cursor: pointer;
   /* margin: 10px 13px 5px 13px; */
 }
@@ -29,6 +29,7 @@ border: 2px solid #fff;
   align-items: center;
   flex: 1;
 }
+
 
 @media (max-width:808px){
   .new_nav{

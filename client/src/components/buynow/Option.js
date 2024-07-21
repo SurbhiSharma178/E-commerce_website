@@ -1,7 +1,41 @@
-import React from 'react'
+import React, {useContext}from 'react'
 import "./buynow.css";
+import {LoginContext} from "../context/ContextProvider"
+import {ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-const Option = () => {
+const Option = ({deteleData,get}) => {
+
+  const { account, setAccount } = useContext(LoginContext);
+
+  const removeData= async(req,res)=>{
+    try {
+      const res= await fetch(`/remove/${deteleData}`,{
+        method:"DELETE",
+        headers:{
+          Accept:"application/json",
+          "Content-Type":"application/json"
+        },
+        credentials:"include"
+      });
+      const data = await res.json();
+      console.log(data);
+
+      if(res.status===400||!data){
+        console.log("Error");
+      }else{
+        console.log("User delete");
+        setAccount(data);
+        get();
+        toast.success('item removed from cart ', {
+          position: "top-center",
+          });
+      }
+    } catch (error) {
+      console.log("Error "+error.message);
+    }
+  }
+
   return (
     <>
       <div className="add_remove_select">
@@ -17,9 +51,10 @@ const Option = () => {
           <option value="9">9</option>
           <option value="10">10+</option>
         </select>
-      <p style={{cursor:"pointer"}}>Delete</p><span>|</span>
+      <p style={{cursor:"pointer"}} onClick={()=>removeData(deteleData)}>Delete</p><span>|</span>
       <p className='forremovemedia'>Save for Later</p><span>|</span>
       <p className='forremovemedia' >See More like this</p><span>|</span>
+      <ToastContainer/>
       </div>
     </>
   )

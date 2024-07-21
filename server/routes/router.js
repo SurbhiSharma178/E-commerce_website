@@ -189,10 +189,14 @@ router.delete("/remove/:id",athenticate,async(req,res)=>{
 
     req.rootUser.carts= req.rootUser.carts.filter((currentValue)=>{
       return currentValue.id !=id;
-
     })
+
+    req.rootUser.save();
+    res.status(201).json(req.rootUser);
+    console.log("item removed");
   } catch (error) {
     console.log("Error "+error.message);
+    res.status(400).json(req.rootUser)
   }
 })
 
