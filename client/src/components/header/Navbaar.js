@@ -1,4 +1,4 @@
-import { React, useContext, useEffect } from 'react'
+import { React, useContext, useEffect, useState } from 'react'
 import "./navbaar.css";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import Options from "./Options";
@@ -8,38 +8,53 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { NavLink } from 'react-router-dom';
 // import { colors } from '@mui/material';
 // import Dropdown from './Dropdown.js';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import { LoginContext } from '../context/ContextProvider';
-
+import { useSelector } from 'react-redux';
 
 const Navbaar = () => {
   const { account, setAccount } = useContext(LoginContext);
   // console.log(account)
   // console.log(account.carts.length);
 
-  const getdetailValidUSer= async()=>{
-    const res = await fetch("/validUser",{
-      method:"GET",
-      headers:{
-        Accept:"application/json",
-        "Content-Type":"application/json"
+
+  const [text, setText] = useState("")
+  console.log(text);
+  const [liOpen, setLiOpen] = useState(true);
+
+  const { products } = useSelector((state) => state.getproductdata);
+  const { second_data } = useSelector((state) => state.getSecondSlidedata);
+
+  const getdetailValidUSer = async () => {
+    const res = await fetch("/validUser", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
-      credentials:"include"
+      credentials: "include"
     })
 
-    const data= await res.json();
+    const data = await res.json();
     console.log(data);
 
-    if(res.status!==201){
+    if (res.status !== 201) {
       console.log("Error ");
-    }else{
+    } else {
       console.log("Data valid");
       setAccount(data);
     }
   }
 
-  useEffect(()=>{
+  const getText = (items) => {
+    setText(items);
+    setLiOpen(false)
+  }
+
+  useEffect(() => {
     getdetailValidUSer()
-  },[])
+  }, [])
 
 
   return (
@@ -56,8 +71,48 @@ const Navbaar = () => {
                 <strong>Update Location </strong></p>
             </div>
             <Options />
-            <input type="text" placeholder='Search Amazon.in' />
-            <div className="search_icon"><SearchIcon /></div>
+            <input type="text" name=''
+              onChange={(e) => getText(e.target.value)}
+              id='' placeholder='Search Amazon.in' />
+            <div className="search_icon"><SearchIcon />
+
+              {
+                text &&
+                <List className='extrasearch' hidden={liOpen}>
+                  {
+                    products.filter(product => product.title.longTitle.toLowerCase().includes(text.toLowerCase())).map(product => (
+                      <ListItem>
+                        <NavLink to={`/getproductsone/${product.id}`} onClick={()=>setLiOpen(true)}>
+                          {product.title.longTitle}
+                        </NavLink>
+                      </ListItem>
+                    ))
+                  }  {
+                    second_data.filter(product => product.title.shortTitle.toLowerCase().includes(text.toLowerCase())).map(product => (
+                      <ListItem>
+                        <NavLink to={`/getproductstwo/${product.id}`}  onClick={()=>setLiOpen(true)}>
+                          {product.title.shortTitle}
+                        </NavLink>
+                      </ListItem>
+                    ))
+                  }
+
+                </List>
+              }
+              {/* {
+                text &&
+                <List className='extrasearch' hidden={liOpen}>
+                  {
+                    second_data.filter(product => product.title.shortTitle.toLowerCase().includes(text.toLowerCase())).map(product => (
+                      <ListItem>
+                        {product.title.longTitle}
+                      </ListItem>
+                    ))
+                  }
+                </List>
+              } */}
+            </div>
+
 
             <div className="right">
               <div className="language">
@@ -79,18 +134,18 @@ const Navbaar = () => {
               </div>
               <div className="cart_btn">
                 {
-                  account?<NavLink to="/buynow">
-                  <Badge badgeContent={account.carts?.length || 0} color='primary'>
-                    <ShoppingCartOutlinedIcon />
-                  </Badge>
-                  cart
-                  </NavLink>:
-                <NavLink to="/login">
-                <Badge badgeContent={0} color='primary'>
-                  <ShoppingCartOutlinedIcon />
-                </Badge>
-                cart
-                </NavLink>
+                  account ? <NavLink to="/buynow">
+                    <Badge badgeContent={account.carts?.length || 0} color='primary'>
+                      <ShoppingCartOutlinedIcon />
+                    </Badge>
+                    cart
+                  </NavLink> :
+                    <NavLink to="/login">
+                      <Badge badgeContent={0} color='primary'>
+                        <ShoppingCartOutlinedIcon />
+                      </Badge>
+                      cart
+                    </NavLink>
                 }
               </div>
 

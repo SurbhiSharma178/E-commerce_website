@@ -206,9 +206,10 @@ header .hamburgur{
 header .extrasearch{
   position: absolute;
   background-color: #fff;
+  margin-left: -620px;
   color: #000;
-  top: 50px;
-  width: 440px;
+  top: 51px;
+  width: 586px;
 }
 
 header .extrasearch a{

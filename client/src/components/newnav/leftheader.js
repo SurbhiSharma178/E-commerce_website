@@ -3,6 +3,8 @@ import {Avatar, Divider} from '@mui/material'
 import { LoginContext } from '../context/ContextProvider';
 import { NavLink, useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
+import {ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import "./leftheader.css";
 
 const Leftheader = ({LogClose}) => {
@@ -27,7 +29,10 @@ const Leftheader = ({LogClose}) => {
     if(res2.status!==201){
       console.log("Error ");
     }else{
-      alert("Logout successfully")
+      // alert("Logout successfully")
+      toast.success('User Logout', {
+        position: "top-center",
+        });
       history("/")
       setAccount(false);
     }
@@ -37,6 +42,7 @@ const Leftheader = ({LogClose}) => {
     <>
       <div className="leftheader">
         <div className="left_nav">
+        <ToastContainer/>
           {
             account ? <Avatar className="avtar2">{account.fname[0].toUpperCase()}</Avatar> :
               <Avatar className="avtar"></Avatar>
