@@ -17,6 +17,7 @@ const Newnav = () => {
     setDrOpen(false)
   }
 
+  
   return (
     <>
       <div className="new_nav">

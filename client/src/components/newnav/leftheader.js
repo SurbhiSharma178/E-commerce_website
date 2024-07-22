@@ -1,13 +1,37 @@
 import React, { useContext } from 'react'
 import {Avatar, Divider} from '@mui/material'
 import { LoginContext } from '../context/ContextProvider';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import "./leftheader.css";
 
 const Leftheader = ({LogClose}) => {
 
   const { account, setAccount } = useContext(LoginContext);
+
+  const history = useNavigate()
+
+  const logOutUser= async()=>{
+    const res2 = await fetch("/logout",{
+      method:"GET",
+      headers:{
+        Accept:"application/json",
+        "Content-Type":"application/json"
+      },
+      credentials:"include"
+    })
+
+    const data2= await res2.json();
+    console.log(data2);
+
+    if(res2.status!==201){
+      console.log("Error ");
+    }else{
+      alert("Logout successfully")
+      history("/")
+      setAccount(false);
+    }
+  }
 
   return (
     <>
@@ -35,7 +59,7 @@ const Leftheader = ({LogClose}) => {
           <div className="flag">
             <NavLink to="/">Your Account</NavLink>
             {
-              account ?<NavLink style={{marginTop:"-14px",marginLeft:"-18px"}}><LogoutIcon style={{marginRight:"2px"}}/>Sign Out</NavLink>:
+              account ?<NavLink style={{marginTop:"-14px",marginLeft:"-18px"}} onClick={logOutUser}><LogoutIcon style={{marginRight:"2px"}}/>Sign Out</NavLink>:
               <NavLink to="/login" style={{marginTop:"-8px",marginLeft:"-40px"}}>Sign In</NavLink>
             }
             
