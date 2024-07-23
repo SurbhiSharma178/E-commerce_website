@@ -4,6 +4,7 @@ import { Divider } from '@mui/material';
 import {useNavigate, useParams } from 'react-router-dom';
 // import {products} from "../home/Maincomp"
 import { LoginContext } from '../context/ContextProvider';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const SecondslideCart = () => {
 
@@ -34,7 +35,7 @@ const SecondslideCart = () => {
   }
 
   useEffect(() => {
-    getsecondinddata();
+    setTimeout( getsecondinddata,1000)
   }, [id]);
 
 // add cart function
@@ -92,6 +93,12 @@ const SecondslideCart = () => {
             <p className='description'>About the Item :<span style={{ color: "#565959", fontSize: 14, fontWeight: 500, letterSpacing: "0.4px" }}>{indData.description}</span></p>
           </div>
         </div>
+        {
+          indData ?  <div className="circle">
+          <CircularProgress/>
+          <h2>Loading...</h2>
+        </div>:""
+        }
       </div>
 }
     </>

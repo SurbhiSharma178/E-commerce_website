@@ -4,7 +4,7 @@ import { Divider } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 // import {products} from "../home/Maincomp"
 import { LoginContext } from '../context/ContextProvider';
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Cart = () => {
   const { id } = useParams("");
@@ -36,7 +36,7 @@ const history= useNavigate("");
   }
 
   useEffect(() => {
-    getinddata();
+    setTimeout( getinddata,1000)
   }, [id]);
 
 
@@ -98,6 +98,12 @@ const history= useNavigate("");
               <p className='description'>About the Item :<span style={{ color: "#565959", fontSize: 14, fontWeight: 500, letterSpacing: "0.4px" }}>{inddata.description}</span></p>
             </div>
           </div>
+          {
+            inddata ?  <div className="circle">
+            <CircularProgress/>
+            <h2>Loading...</h2>
+          </div>:""
+          }
         </div>
       }
     </>
